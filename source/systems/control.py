@@ -1,9 +1,3 @@
-"""
-Input Controller System -Dependency Inversion Principle (DIP)
-
-High-level (Player) ไม่ผูกกับ Low-level (Keyboard/Joystick) โดยตรง
-ใช้ ICommand และ IInputProvider เป็น abstraction
-"""
 
 from abc import ABC, abstractmethod
 
@@ -13,18 +7,14 @@ import pygame
 # ============ Abstraction Layer (High-level) ============
 
 class ICommand(ABC):
-    """Command abstraction - Player รับ Command แทน raw input"""
     @abstractmethod
     def execute(self, actor) -> None:
-        """Execute command on the given actor (e.g. Player)"""
         pass
 
 
 class IInputProvider(ABC):
-    """Input source abstraction - ไม่ผูกกับ Keyboard/Joystick โดยตรง"""
     @abstractmethod
     def get_command(self) -> ICommand | None:
-        """Return current command from input, or None if no input"""
         pass
 
 

@@ -1,33 +1,31 @@
 import pygame
+from config import screen_width, screen_height
+import pytmx.util_pygame import load_pygame
 
-from source.controller import KeyboardInputProvider, IInputProvider
-from source.player import Player
+from source.systems.control import KeyboardInputProvider, IInputProvider
+from source.entities.player import Player
 
 
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((1280, 720))
+        self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.clock = pygame.time.Clock()
         self.running = True
+        self.map = load_pygame('assets/map/map01.tmx')
 
-        # DIP: ใช้ abstraction - เปลี่ยนเป็น JoystickInputProvider ได้โดยไม่แก้ Player
-        self.input_provider: IInputProvider = KeyboardInputProvider()
-        self.player = Player(400, 350)
 
+    def run(self):
         while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
-
-            # DIP: Player รับ Command จาก input provider (ไม่รู้ว่าเป็น Keyboard หรือ Joystick)
-            command = self.input_provider.get_command()
-            self.player.handle_input(command)
-
             self.screen.fill((0, 0, 0))
-            # TODO: draw player at (player.x, player.y)
             pygame.display.flip()
             self.clock.tick(60)
+
+
+
 
 
 
