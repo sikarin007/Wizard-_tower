@@ -1,5 +1,5 @@
 class Player:
-    """High-level: รับ Command (DIP) แทนผูกกับ Keyboard โดยตรง"""
+
     
     def __init__(self, x, y):
         self.x = x
@@ -8,7 +8,7 @@ class Player:
         self.direction = "right"
 
     def handle_input(self, command):
-        """ถูก: รับ Command เข้ามา (Dependency Injection)"""
+        """รับ Command เข้ามา และดำเนินการตามคำสั่ง"""
         if command is not None:
             command.execute(self)
 
