@@ -1,10 +1,11 @@
-class Player:
+from config import player_speed
 
-    
+
+class Player:
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.speed = 5
+        self.speed = player_speed
         self.direction = "right"
 
     def handle_input(self, command):

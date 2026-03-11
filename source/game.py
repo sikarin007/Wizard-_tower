@@ -1,6 +1,8 @@
 import pygame
 from pathlib import Path
-from config import screen_width, screen_height
+from config import screen_width, screen_height, FPS
+from source.entities.tower import Tower
+
 
 try:
     from pytmx.util_pygame import load_pygame
@@ -19,6 +21,10 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.tmx_map = None
+        self.tower = Tower()  # ตรงกลางแมพ (TOWER_POS)
+        self.all_sprites = pygame.sprite.Group(self.tower)
+        
+
         if HAS_PYTMX:
             map_path = Path(__file__).resolve().parent.parent / "assets" / "map" / "map01.tmx"
             try:
@@ -49,8 +55,11 @@ class Game:
                     self.running = False
             self.screen.fill((0, 0, 0))
             self._draw_map()
+            self.tower.update()
+            self.all_sprites.draw(self.screen)
+            self.tower.draw_health_bar(self.screen)
             pygame.display.flip()
-            self.clock.tick(60)
+            self.clock.tick(FPS)
 
 
 
